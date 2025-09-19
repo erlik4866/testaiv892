@@ -1,0 +1,102 @@
+{
+  "run2471848": [
+    {
+      "id": "1758271740757",
+      "messages": [
+        {
+          "content": "sen kaçıncı gpt sürümüsün",
+          "image": null,
+          "role": "user"
+        },
+        {
+          "content": "Ben GPT-4 mimarisine dayanan bir modelim. Ancak sürüm numaramı veya güncel konumumu kendim doğrudan söyleyemem; OpenAI tarafında kullanılan sürüm bilgilerinden bağımsız olarak çalışıyorum ve genel olarak gelişmiş dil anlama, tutarlı yanıtlar üretme ve çeşitli görevleri yerine getirme yeteneklerine sahibim. Sorularınıza yardımcı olmak için burada bulunuyorum. FiveM Lua kodu veya diğer teknik konularda yardıma ihtiyacınız varsa sormaktan çekinmeyin!",
+          "name": "Code Snippet 1",
+          "role": "bot"
+        },
+        {
+          "content": "naber",
+          "image": null,
+          "role": "user"
+        },
+        {
+          "content": "Error: All API endpoints failed. Failed endpoints:\n- https://api.openai.com/v1 (Status: 429)\n- https://api.chatanywhere.tech/v1 (Status: 429)\n- https://api.chatanywhere.org/v1 (Status: 429)\n- https://api.deepseek.com/v1 (Status: 401)\n- https://api.groq.com/openai/v1 (Status: 401)\n- https://api.anthropic.com/v1 (Status: 401)",
+          "name": "Code Snippet 2",
+          "role": "bot"
+        },
+        {
+          "role": "user",
+          "content": "naber",
+          "image": null
+        },
+        {
+          "role": "bot",
+          "content": "İyiyim, teşekkürler! Sen nasılsın? FiveM Lua konusunda yardım etmek, kod yazmak veya teknik bir sorun üzerinde çalışmak istersen buradayım. Neyi çözmek istiyorsun? Varsa hedefleri, mevcut kurulum, hangi sunucu versiyonu, hangi natives kullanımı gibi detayları paylaşırsan daha hızlı yardımcı olurum.",
+          "name": "Code Snippet 3"
+        },
+        {
+          "role": "user",
+          "content": "iyi sen gpt 5misin",
+          "image": null
+        },
+        {
+          "role": "bot",
+          "content": "Hayır, ben GPT-4 tabanlı bir modelim. OpenAI tarafından geliştirilen ve GPT-4 mimarisine dayanarak çalışıyorum. Ancak FiveM Lua konusunda yardımcı olmak, kod yazmak ve teknik sorunlarda destek sağlamak için burada olduğumu unutma. Başka bir konuda mı yardım istersin? Özellikle FiveM ile ilgili projeni paylaşıp ihtiyaç duyduğun kod parçacıklarını veya best practices’leri konuşalım.",
+          "name": "Code Snippet 4"
+        },
+        {
+          "role": "user",
+          "content": "en güncel verin ne zamn",
+          "image": null
+        },
+        {
+          "role": "bot",
+          "content": "En güncel veriler benim eğitimim (bilgi kesim) itibarıyla 2024-06’a kadar olan bilgilerle sınırlı. Ancak canlı internet erişimim yok; bu nedenle o tarihten sonraki olaylar, sürümler veya güncellemeler hakkında gerçek zamanlı bilgi veremem. \n\nFiveM ve ilgili teknolojiler için en güvenilir ve güncel bilgiyi şu kaynaklardan takip edebilirsiniz:\n- FiveM resmi web sitesi ve forumları\n- FiveM Discord sunucuları\n- FiveM natives listesi ve belgeler\n- GitHub depoları veya sürüm notları (ör. esx, qbus, vrp gibi ana paketler)\n- Discord veya Slack kanallarında güncel duyurular\n\nİstersen mevcut sürümünüz için uyumlu kod parçaları veya best practices konusunda güncel görünümlerle yardımcı olayım. Hangi sürüm veya framework (ESX, QBCore, VRP vb.) üzerinde çalışıyorsunuz? Projenizin hedefleri ve karşılaştığınız sorunları paylaşabilirsen, en güncel en iyi uygulamalara uygun çözümler önereyim.",
+          "name": "Code Snippet 5"
+        },
+        {
+          "role": "user",
+          "content": "bana qbcore altyapılı bir kod yaz",
+          "image": null
+        },
+        {
+          "role": "bot",
+          "content": "",
+          "name": "Code Snippet 6"
+        }
+      ],
+      "name": "Chat 2"
+    },
+    {
+      "id": "1758271852947",
+      "messages": [
+        {
+          "content": "naber",
+          "image": null,
+          "role": "user"
+        },
+        {
+          "content": "Error: All API endpoints failed. Failed endpoints:\n- https://api.openai.com/v1 (Status: 429)\n- https://api.chatanywhere.tech/v1 (Status: 429)\n- https://api.chatanywhere.org/v1 (Status: 429)\n- https://api.deepseek.com/v1 (Status: 401)\n- https://api.groq.com/openai/v1 (Status: 401)\n- https://api.anthropic.com/v1 (Status: 401)",
+          "name": "Code Snippet 1",
+          "role": "bot"
+        }
+      ],
+      "name": "Chat 2"
+    },
+    {
+      "id": "1758271881559",
+      "messages": [
+        {
+          "content": "naber",
+          "image": null,
+          "role": "user"
+        },
+        {
+          "content": "",
+          "name": "Code Snippet 1",
+          "role": "bot"
+        }
+      ],
+      "name": "Chat 3"
+    }
+  ]
+}

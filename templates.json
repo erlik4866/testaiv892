@@ -1,0 +1,34 @@
+{
+  "templates": [
+    {
+      "name": "Basic Client Script",
+      "description": "A simple client-side script template",
+      "code": "-- Basic Client Script Template\nCitizen.CreateThread(function()\n    while true do\n        Citizen.Wait(0)\n        -- Your code here\n    end\nend)"
+    },
+    {
+      "name": "Basic Server Script",
+      "description": "A simple server-side script template",
+      "code": "-- Basic Server Script Template\nRegisterServerCallback('example:getData', function(source, cb)\n    -- Your server logic here\n    cb('data')\nend)"
+    },
+    {
+      "name": "ESX Job Template",
+      "description": "Template for ESX job scripts",
+      "code": "-- ESX Job Template\nESX = nil\nCitizen.CreateThread(function()\n    while ESX == nil do\n        TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)\n        Citizen.Wait(0)\n    end\nend)\n\n-- Job logic here"
+    },
+    {
+      "name": "QB-Core Job Template",
+      "description": "Template for QB-Core job scripts",
+      "code": "-- QB-Core Job Template\nQBCore = exports['qb-core']:GetCoreObject()\n\n-- Job logic here"
+    },
+    {
+      "name": "Vehicle Script",
+      "description": "Template for vehicle-related scripts",
+      "code": "-- Vehicle Script Template\nCitizen.CreateThread(function()\n    while true do\n        Citizen.Wait(0)\n        local playerPed = PlayerPedId()\n        local vehicle = GetVehiclePedIsIn(playerPed, false)\n        if vehicle ~= 0 then\n            -- Vehicle logic here\n        end\n    end\nend)"
+    },
+    {
+      "name": "NPC Script",
+      "description": "Template for NPC creation",
+      "code": "-- NPC Script Template\nCitizen.CreateThread(function()\n    RequestModel(GetHashKey('a_m_m_business_01'))\n    while not HasModelLoaded(GetHashKey('a_m_m_business_01')) do\n        Wait(1)\n    end\n    \n    local npc = CreatePed(4, GetHashKey('a_m_m_business_01'), 0.0, 0.0, 0.0, 0.0, false, true)\n    -- NPC logic here\nend)"
+    }
+  ]
+}

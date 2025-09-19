@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>FiveM Lua Forum</title>
+    <description>FiveM Lua script paylaşım ve tartışma forumu</description>
+    <link>http://localhost:8000/forum.html</link>
+    <language>tr</language>
+    <item>
+      <title>Örnek Konu 1</title>
+      <description>Bu bir örnek konu açıklamasıdır.</description>
+      <link>http://localhost:8000/forum.html#topic1</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Örnek Konu 2</title>
+      <description>Başka bir örnek konu.</description>
+      <link>http://localhost:8000/forum.html#topic2</link>
+      <pubDate>Tue, 02 Jan 2024 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

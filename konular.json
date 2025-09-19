@@ -1,0 +1,136 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "FiveM Script Paylaşımı",
+      "description": "FiveM scriptlerinizi burada paylaşın ve tartışın",
+      "icon": "🎮",
+      "order": 1,
+      "forums": [
+        {
+          "id": 1,
+          "name": "Client Scripts",
+          "description": "Client-side script paylaşımları",
+          "icon": "👤",
+          "topics": [
+            {
+              "id": 1,
+              "title": "ESP Script Örneği",
+              "content": "Merhaba arkadaşlar! ESP scripti örneği paylaşıyorum. Bu script oyuncuların konumlarını harita üzerinde gösterir.\n\n```lua\n-- ESP Script\nCitizen.CreateThread(function()\n    while true do\n        Citizen.Wait(0)\n        for i, player in ipairs(GetPlayers()) do\n            if player ~= PlayerId() then\n                local ped = GetPlayerPed(player)\n                local coords = GetEntityCoords(ped)\n                DrawMarker(1, coords.x, coords.y, coords.z + 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 100, false, true, 2, nil, nil, false)\n            end\n        end\n    end\nend)\n```\n\nBu scripti kullanırken dikkatli olun, sunucu kurallarına uygun şekilde kullanın.",
+              "author": "ScriptMaster",
+              "author_id": 1,
+              "timestamp": "2024-01-15T10:30:00Z",
+              "last_reply": "2024-01-15T10:30:00Z",
+              "replies_count": 2,
+              "views": 45,
+              "likes": 8,
+              "is_pinned": false,
+              "is_locked": false,
+              "replies": [
+                {
+                  "id": 1,
+                  "content": "Teşekkürler çok faydalı! Birkaç soru sormak istiyorum:\n\n1. Bu script performansı nasıl etkiler?\n2. Marker rengini nasıl değiştirebilirim?",
+                  "author": "LuaNoob",
+                  "author_id": 2,
+                  "timestamp": "2024-01-15T11:15:00Z",
+                  "likes": 3,
+                  "is_best_answer": false
+                },
+                {
+                  "id": 2,
+                  "content": "@LuaNoob merhaba!\n\n1. Performans: Bu script çok hafif, Citizen.Wait(0) ile çalışıyor ama çok fazla player varsa optimize edilmesi gerekebilir.\n\n2. Marker rengini değiştirmek için DrawMarker fonksiyonundaki RGB değerlerini değiştirin:\n```lua\nDrawMarker(1, coords.x, coords.y, coords.z + 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 255, 0, 100, false, true, 2, nil, nil, false)\n```\nBu yeşil marker yapar.",
+                  "author": "ScriptMaster",
+                  "author_id": 1,
+                  "timestamp": "2024-01-15T12:00:00Z",
+                  "likes": 5,
+                  "is_best_answer": true
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "HUD Script - Sağlık ve Zırh Göstergesi",
+              "content": "Basit bir HUD scripti paylaşıyorum. Sağlık ve zırh bilgilerini ekranda gösterir.\n\nÖzellikler:\n- Sağlık barı\n- Zırh barı\n- Canlı güncelleme\n- Responsive tasarım\n\nScript kodunu ekleyeceğim...",
+              "author": "HUDMaker",
+              "author_id": 3,
+              "timestamp": "2024-01-14T15:45:00Z",
+              "last_reply": "2024-01-14T15:45:00Z",
+              "replies_count": 0,
+              "views": 23,
+              "likes": 4,
+              "is_pinned": false,
+              "is_locked": false,
+              "replies": []
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Server Scripts",
+          "description": "Server-side script paylaşımları",
+          "icon": "🖥️",
+          "topics": []
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Yardım & Destek",
+      "description": "FiveM script geliştirme konusunda yardım alın",
+      "icon": "❓",
+      "order": 2,
+      "forums": [
+        {
+          "id": 3,
+          "name": "Script Hataları",
+          "description": "Scriptlerinizdeki hatalar için yardım",
+          "icon": "🐛",
+          "topics": []
+        },
+        {
+          "id": 4,
+          "name": "Genel Sorular",
+          "description": "FiveM ile ilgili genel sorularınız",
+          "icon": "💬",
+          "topics": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Duyurular",
+      "description": "Önemli duyurular ve güncellemeler",
+      "icon": "📢",
+      "order": 3,
+      "forums": [
+        {
+          "id": 5,
+          "name": "Güncellemeler",
+          "description": "Platform güncellemeleri",
+          "icon": "🔄",
+          "topics": []
+        }
+      ]
+    }
+  ],
+  "next_topic_id": 3,
+  "next_reply_id": 3,
+  "stats": {
+    "total_topics": 2,
+    "total_replies": 2,
+    "total_users": 3,
+    "online_users": 1
+  },
+  "posts": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "title": "test",
+      "content": "test",
+      "timestamp": "2025-09-18T13:48:45.204518",
+      "author": "admin test",
+      "replies": []
+    }
+  ],
+  "next_id": 2
+}

@@ -1,0 +1,509 @@
+{
+  "natives": [
+    {
+      "name": "Citizen.CreateThread",
+      "description": "Creates a new thread for executing code asynchronously",
+      "example": "Citizen.CreateThread(function()\n    while true do\n        Citizen.Wait(0)\n        -- Your code here\n    end\nend)"
+    },
+    {
+      "name": "TriggerEvent",
+      "description": "Triggers a client-side event",
+      "example": "TriggerEvent('eventName', arg1, arg2)"
+    },
+    {
+      "name": "RegisterNetEvent",
+      "description": "Registers a network event handler",
+      "example": "RegisterNetEvent('eventName')\nAddEventHandler('eventName', function(arg1, arg2)\n    -- Handle event\nend)"
+    },
+    {
+      "name": "TriggerServerEvent",
+      "description": "Triggers a server-side event from client",
+      "example": "TriggerServerEvent('serverEvent', data)"
+    },
+    {
+      "name": "PlayerPedId",
+      "description": "Gets the player's ped ID",
+      "example": "local playerPed = PlayerPedId()"
+    },
+    {
+      "name": "GetPlayerPed",
+      "description": "Gets a player's ped by server ID",
+      "example": "local ped = GetPlayerPed(playerId)"
+    },
+    {
+      "name": "GetEntityCoords",
+      "description": "Gets the coordinates of an entity",
+      "example": "local coords = GetEntityCoords(entity)"
+    },
+    {
+      "name": "SetEntityCoords",
+      "description": "Sets the coordinates of an entity",
+      "example": "SetEntityCoords(entity, x, y, z, false, false, false, false)"
+    },
+    {
+      "name": "CreatePed",
+      "description": "Creates a new ped",
+      "example": "local ped = CreatePed(pedType, modelHash, x, y, z, heading, isNetwork, bScriptHostPed)"
+    },
+    {
+      "name": "DeleteEntity",
+      "description": "Deletes an entity",
+      "example": "DeleteEntity(entity)"
+    },
+    {
+      "name": "RequestModel",
+      "description": "Requests a model to be loaded",
+      "example": "RequestModel(modelHash)"
+    },
+    {
+      "name": "HasModelLoaded",
+      "description": "Checks if a model has been loaded",
+      "example": "if HasModelLoaded(modelHash) then\n    -- Model is loaded\nend"
+    },
+    {
+      "name": "DrawText",
+      "description": "Draws text on screen",
+      "example": "DrawText(0.5, 0.5, 'Hello World', 4, 0.5, 0.5, 255, 255, 255, 255)"
+    },
+    {
+      "name": "BeginTextCommandDisplayText",
+      "description": "Begins a text command for displaying text",
+      "example": "BeginTextCommandDisplayText('STRING')\nAddTextComponentSubstringPlayerName(text)\nEndTextCommandDisplayText(x, y)"
+    },
+    {
+      "name": "AddTextEntry",
+      "description": "Adds a text entry for notifications",
+      "example": "AddTextEntry('MY_CODE', 'My notification text')"
+    },
+    {
+      "name": "BeginTextCommandThefeedPost",
+      "description": "Begins a text command for feed posts",
+      "example": "BeginTextCommandThefeedPost('STRING')\nAddTextComponentSubstringPlayerName(text)\nEndTextCommandThefeedPostTicker(false, true)"
+    },
+    {
+      "name": "GetVehiclePedIsIn",
+      "description": "Gets the vehicle the ped is currently in",
+      "example": "local vehicle = GetVehiclePedIsIn(ped, lastVehicle)"
+    },
+    {
+      "name": "IsPedInAnyVehicle",
+      "description": "Checks if a ped is in any vehicle",
+      "example": "if IsPedInAnyVehicle(ped, false) then\n    -- Ped is in vehicle\nend"
+    },
+    {
+      "name": "TaskWarpPedIntoVehicle",
+      "description": "Warps a ped into a vehicle",
+      "example": "TaskWarpPedIntoVehicle(ped, vehicle, seat)"
+    },
+    {
+      "name": "SetPedIntoVehicle",
+      "description": "Sets a ped into a vehicle",
+      "example": "SetPedIntoVehicle(ped, vehicle, seat)"
+    },
+    {
+      "name": "GetPedInVehicleSeat",
+      "description": "Gets the ped in a specific vehicle seat",
+      "example": "local ped = GetPedInVehicleSeat(vehicle, seatIndex)"
+    },
+    {
+      "name": "GetVehicleEngineHealth",
+      "description": "Gets the engine health of a vehicle",
+      "example": "local health = GetVehicleEngineHealth(vehicle)"
+    },
+    {
+      "name": "SetVehicleEngineHealth",
+      "description": "Sets the engine health of a vehicle",
+      "example": "SetVehicleEngineHealth(vehicle, health)"
+    },
+    {
+      "name": "GetVehicleBodyHealth",
+      "description": "Gets the body health of a vehicle",
+      "example": "local health = GetVehicleBodyHealth(vehicle)"
+    },
+    {
+      "name": "SetVehicleBodyHealth",
+      "description": "Sets the body health of a vehicle",
+      "example": "SetVehicleBodyHealth(vehicle, health)"
+    },
+    {
+      "name": "SetVehicleFixed",
+      "description": "Fixes a vehicle completely",
+      "example": "SetVehicleFixed(vehicle)"
+    },
+    {
+      "name": "SetVehicleEngineOn",
+      "description": "Turns the vehicle engine on or off",
+      "example": "SetVehicleEngineOn(vehicle, true, true, false)"
+    },
+    {
+      "name": "SetVehicleUndriveable",
+      "description": "Makes a vehicle undriveable",
+      "example": "SetVehicleUndriveable(vehicle, true)"
+    },
+    {
+      "name": "CreateVehicle",
+      "description": "Creates a new vehicle",
+      "example": "local vehicle = CreateVehicle(modelHash, x, y, z, heading, isNetworked, bScriptHostVeh)"
+    },
+    {
+      "name": "DeleteVehicle",
+      "description": "Deletes a vehicle",
+      "example": "DeleteVehicle(vehicle)"
+    },
+    {
+      "name": "SetVehicleOnGroundProperly",
+      "description": "Places a vehicle properly on the ground",
+      "example": "SetVehicleOnGroundProperly(vehicle)"
+    },
+    {
+      "name": "FreezeEntityPosition",
+      "description": "Freezes or unfreezes an entity's position",
+      "example": "FreezeEntityPosition(entity, true)"
+    },
+    {
+      "name": "SetEntityAsMissionEntity",
+      "description": "Sets an entity as a mission entity",
+      "example": "SetEntityAsMissionEntity(entity, true, true)"
+    },
+    {
+      "name": "SetEntityAsNoLongerNeeded",
+      "description": "Marks an entity as no longer needed",
+      "example": "SetEntityAsNoLongerNeeded(entity)"
+    },
+    {
+      "name": "DoesEntityExist",
+      "description": "Checks if an entity exists",
+      "example": "if DoesEntityExist(entity) then\n    -- Entity exists\nend"
+    },
+    {
+      "name": "IsEntityDead",
+      "description": "Checks if an entity is dead",
+      "example": "if IsEntityDead(entity) then\n    -- Entity is dead\nend"
+    },
+    {
+      "name": "SetPedAsNoLongerNeeded",
+      "description": "Marks a ped as no longer needed",
+      "example": "SetPedAsNoLongerNeeded(ped)"
+    },
+    {
+      "name": "SetVehicleAsNoLongerNeeded",
+      "description": "Marks a vehicle as no longer needed",
+      "example": "SetVehicleAsNoLongerNeeded(vehicle)"
+    },
+    {
+      "name": "GetClosestPlayer",
+      "description": "Gets the closest player to coordinates",
+      "example": "local playerId = GetClosestPlayer(x, y, z)"
+    },
+    {
+      "name": "GetPlayerName",
+      "description": "Gets a player's name",
+      "example": "local name = GetPlayerName(playerId)"
+    },
+    {
+      "name": "GetPlayerServerId",
+      "description": "Gets a player's server ID",
+      "example": "local serverId = GetPlayerServerId(playerId)"
+    },
+    {
+      "name": "NetworkGetPlayerIndexFromPed",
+      "description": "Gets player index from ped",
+      "example": "local playerId = NetworkGetPlayerIndexFromPed(ped)"
+    },
+    {
+      "name": "GetPlayerFromServerId",
+      "description": "Gets player ID from server ID",
+      "example": "local playerId = GetPlayerFromServerId(serverId)"
+    },
+    {
+      "name": "GetNumPlayerIndices",
+      "description": "Gets the number of player indices",
+      "example": "local count = GetNumPlayerIndices()"
+    },
+    {
+      "name": "GetPlayerIndex",
+      "description": "Gets the player index",
+      "example": "local playerId = PlayerId()"
+    },
+    {
+      "name": "PlayerId",
+      "description": "Gets the current player's ID",
+      "example": "local playerId = PlayerId()"
+    },
+    {
+      "name": "GetPlayerWantedLevel",
+      "description": "Gets a player's wanted level",
+      "example": "local wantedLevel = GetPlayerWantedLevel(playerId)"
+    },
+    {
+      "name": "SetPlayerWantedLevel",
+      "description": "Sets a player's wanted level",
+      "example": "SetPlayerWantedLevel(playerId, wantedLevel, false)"
+    },
+    {
+      "name": "ClearPlayerWantedLevel",
+      "description": "Clears a player's wanted level",
+      "example": "ClearPlayerWantedLevel(playerId)"
+    },
+    {
+      "name": "GiveWeaponToPed",
+      "description": "Gives a weapon to a ped",
+      "example": "GiveWeaponToPed(ped, weaponHash, ammoCount, isHidden, equipNow)"
+    },
+    {
+      "name": "RemoveWeaponFromPed",
+      "description": "Removes a weapon from a ped",
+      "example": "RemoveWeaponFromPed(ped, weaponHash)"
+    },
+    {
+      "name": "HasPedGotWeapon",
+      "description": "Checks if a ped has a specific weapon",
+      "example": "if HasPedGotWeapon(ped, weaponHash, false) then\n    -- Ped has weapon\nend"
+    },
+    {
+      "name": "SetPedWeaponTintIndex",
+      "description": "Sets the tint index of a ped's weapon",
+      "example": "SetPedWeaponTintIndex(ped, weaponHash, tintIndex)"
+    },
+    {
+      "name": "GetSelectedPedWeapon",
+      "description": "Gets the currently selected weapon of a ped",
+      "example": "local weaponHash = GetSelectedPedWeapon(ped)"
+    },
+    {
+      "name": "SetCurrentPedWeapon",
+      "description": "Sets the current weapon of a ped",
+      "example": "SetCurrentPedWeapon(ped, weaponHash, true)"
+    },
+    {
+      "name": "GetAmmoInPedWeapon",
+      "description": "Gets the ammo count in a ped's weapon",
+      "example": "local ammo = GetAmmoInPedWeapon(ped, weaponHash)"
+    },
+    {
+      "name": "SetPedAmmo",
+      "description": "Sets the ammo count for a ped's weapon",
+      "example": "SetPedAmmo(ped, weaponHash, ammoCount)"
+    },
+    {
+      "name": "AddAmmoToPed",
+      "description": "Adds ammo to a ped's weapon",
+      "example": "AddAmmoToPed(ped, weaponHash, ammoCount)"
+    },
+    {
+      "name": "RemoveAllPedWeapons",
+      "description": "Removes all weapons from a ped",
+      "example": "RemoveAllPedWeapons(ped, true)"
+    },
+    {
+      "name": "SetPedInfiniteAmmo",
+      "description": "Sets infinite ammo for a ped",
+      "example": "SetPedInfiniteAmmo(ped, true, weaponHash)"
+    },
+    {
+      "name": "GetWeaponDamageType",
+      "description": "Gets the damage type of a weapon",
+      "example": "local damageType = GetWeaponDamageType(weaponHash)"
+    },
+    {
+      "name": "SetWeaponDamageModifier",
+      "description": "Sets the damage modifier for a weapon",
+      "example": "SetWeaponDamageModifier(weaponHash, modifier)"
+    },
+    {
+      "name": "GetWeaponClipSize",
+      "description": "Gets the clip size of a weapon",
+      "example": "local clipSize = GetWeaponClipSize(weaponHash)"
+    },
+    {
+      "name": "QBCore.Functions.GetPlayer",
+      "description": "Gets player data from QB-Core",
+      "example": "local Player = QBCore.Functions.GetPlayer(source)"
+    },
+    {
+      "name": "QBCore.Functions.GetPlayerData",
+      "description": "Gets player data",
+      "example": "local data = QBCore.Functions.GetPlayerData()"
+    },
+    {
+      "name": "QBCore.Functions.Notify",
+      "description": "Shows a notification to the player",
+      "example": "QBCore.Functions.Notify('Message', 'primary', 5000)"
+    },
+    {
+      "name": "QBCore.Functions.Progressbar",
+      "description": "Shows a progress bar",
+      "example": "QBCore.Functions.Progressbar('name', 'Label', duration, false, true, {}, {}, {}, function() end)"
+    },
+    {
+      "name": "QBCore.Functions.GetClosestPlayer",
+      "description": "Gets the closest player",
+      "example": "local playerId, dist = QBCore.Functions.GetClosestPlayer()"
+    },
+    {
+      "name": "QBCore.Functions.HasItem",
+      "description": "Checks if player has an item",
+      "example": "if QBCore.Functions.HasItem('item_name') then end"
+    },
+    {
+      "name": "QBCore.Functions.GetItemByName",
+      "description": "Gets item data by name",
+      "example": "local item = QBCore.Functions.GetItemByName('item_name')"
+    },
+    {
+      "name": "QBCore.Functions.GetVehicleProperties",
+      "description": "Gets vehicle properties",
+      "example": "local props = QBCore.Functions.GetVehicleProperties(vehicle)"
+    },
+    {
+      "name": "QBCore.Functions.SpawnVehicle",
+      "description": "Spawns a vehicle",
+      "example": "QBCore.Functions.SpawnVehicle(model, cb, coords, isnetworked)"
+    },
+    {
+      "name": "QBCore.Functions.DeleteVehicle",
+      "description": "Deletes a vehicle",
+      "example": "QBCore.Functions.DeleteVehicle(vehicle)"
+    },
+    {
+      "name": "QBCore.Functions.GetPlayers",
+      "description": "Gets all players",
+      "example": "local players = QBCore.Functions.GetPlayers()"
+    },
+    {
+      "name": "QBCore.Functions.GetPlayerByCitizenId",
+      "description": "Gets player by citizen ID",
+      "example": "local Player = QBCore.Functions.GetPlayerByCitizenId(citizenid)"
+    },
+    {
+      "name": "QBCore.Functions.GetOfflinePlayerByCitizenId",
+      "description": "Gets offline player by citizen ID",
+      "example": "local Player = QBCore.Functions.GetOfflinePlayerByCitizenId(citizenid)"
+    },
+    {
+      "name": "QBCore.Functions.GetIdentifier",
+      "description": "Gets player identifier",
+      "example": "local identifier = QBCore.Functions.GetIdentifier(source, 'license')"
+    },
+    {
+      "name": "QBCore.Functions.GetCoords",
+      "description": "Gets player coordinates",
+      "example": "local coords = QBCore.Functions.GetCoords(source)"
+    },
+    {
+      "name": "QBCore.Functions.GetName",
+      "description": "Gets player name",
+      "example": "local name = QBCore.Functions.GetName(source)"
+    },
+    {
+      "name": "QBCore.Functions.GetJob",
+      "description": "Gets player job",
+      "example": "local job = QBCore.Functions.GetJob(source)"
+    },
+    {
+      "name": "QBCore.Functions.GetGang",
+      "description": "Gets player gang",
+      "example": "local gang = QBCore.Functions.GetGang(source)"
+    },
+    {
+      "name": "QBCore.Functions.SetJob",
+      "description": "Sets player job",
+      "example": "QBCore.Functions.SetJob(source, 'police', 0)"
+    },
+    {
+      "name": "QBCore.Functions.SetGang",
+      "description": "Sets player gang",
+      "example": "QBCore.Functions.SetGang(source, 'ballas', 0)"
+    },
+    {
+      "name": "QBCore.Functions.AddJob",
+      "description": "Adds a job",
+      "example": "QBCore.Functions.AddJob(jobName, job)"
+    },
+    {
+      "name": "QBCore.Functions.AddGang",
+      "description": "Adds a gang",
+      "example": "QBCore.Functions.AddGang(gangName, gang)"
+    },
+    {
+      "name": "QBCore.Functions.RemoveJob",
+      "description": "Removes a job",
+      "example": "QBCore.Functions.RemoveJob(jobName)"
+    },
+    {
+      "name": "QBCore.Functions.RemoveGang",
+      "description": "Removes a gang",
+      "example": "QBCore.Functions.RemoveGang(gangName)"
+    },
+    {
+      "name": "QBCore.Functions.GetJobs",
+      "description": "Gets all jobs",
+      "example": "local jobs = QBCore.Functions.GetJobs()"
+    },
+    {
+      "name": "QBCore.Functions.GetGangs",
+      "description": "Gets all gangs",
+      "example": "local gangs = QBCore.Functions.GetGangs()"
+    },
+    {
+      "name": "QBCore.Functions.GetPlayerByPhone",
+      "description": "Gets player by phone number",
+      "example": "local Player = QBCore.Functions.GetPlayerByPhone(number)"
+    },
+    {
+      "name": "ESX.GetPlayerFromId",
+      "description": "Gets ESX player from ID",
+      "example": "local xPlayer = ESX.GetPlayerFromId(source)"
+    },
+    {
+      "name": "ESX.GetPlayerFromIdentifier",
+      "description": "Gets ESX player from identifier",
+      "example": "local xPlayer = ESX.GetPlayerFromIdentifier(identifier)"
+    },
+    {
+      "name": "ESX.GetPlayers",
+      "description": "Gets all ESX players",
+      "example": "local players = ESX.GetPlayers()"
+    },
+    {
+      "name": "ESX.RegisterUsableItem",
+      "description": "Registers a usable item",
+      "example": "ESX.RegisterUsableItem('item_name', function(source) end)"
+    },
+    {
+      "name": "ESX.UseItem",
+      "description": "Uses an item",
+      "example": "xPlayer.removeInventoryItem(item, 1)"
+    },
+    {
+      "name": "ESX.GetItemLabel",
+      "description": "Gets item label",
+      "example": "local label = ESX.GetItemLabel('item_name')"
+    },
+    {
+      "name": "ESX.DoesJobExist",
+      "description": "Checks if job exists",
+      "example": "if ESX.DoesJobExist('police', 0) then end"
+    },
+    {
+      "name": "ESX.GetJobs",
+      "description": "Gets all jobs",
+      "example": "local jobs = ESX.GetJobs()"
+    },
+    {
+      "name": "ESX.RegisterServerCallback",
+      "description": "Registers a server callback",
+      "example": "ESX.RegisterServerCallback('callback_name', function(source, cb) end)"
+    },
+    {
+      "name": "ESX.TriggerServerCallback",
+      "description": "Triggers a server callback",
+      "example": "ESX.TriggerServerCallback('callback_name', function(result) end, arg1, arg2)"
+    },
+    {
+      "name": "ESX.SavePlayer",
+      "description": "Saves player data",
+      "example": "ESX.SavePlayer(xPlayer, cb)"
+    }
+  ]
+}

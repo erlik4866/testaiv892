@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "key": "run3769362",
+    "created_at": "2025-09-18T11:43:55.277805",
+    "expiry": "2025-10-18T11:43:55.277129",
+    "active": true,
+    "created_by": 1,
+    "discord_name": "umut",
+    "discord_id": "123"
+  },
+  {
+    "id": 2,
+    "key": "run3088032",
+    "created_at": "2025-09-18T12:15:28.901673",
+    "expiry": "2175-01-30T12:15:28.900602",
+    "active": true,
+    "created_by": 1,
+    "discord_name": "test",
+    "discord_id": "4321"
+  },
+  {
+    "id": 3,
+    "key": "run2471848",
+    "created_at": "2025-09-18T13:11:03.561931",
+    "expiry": "5405-11-17T13:11:03.560834",
+    "active": true,
+    "created_by": 1,
+    "discord_name": "admin test",
+    "discord_id": "1488",
+    "role": "admin"
+  }
+]
