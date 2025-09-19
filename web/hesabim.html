@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesabım - FiveM Lua AI Chat</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .account-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: var(--bg-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .account-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-card h3 {
+            margin-top: 0;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: var(--text-color);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: var(--text-secondary);
+            background: var(--input-bg);
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            word-break: break-all;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--accent-hover);
+        }
+
+        .status-active {
+            color: #4CAF50;
+        }
+
+        .status-expired {
+            color: #f44336;
+        }
+
+        .status-unknown {
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="account-container">
+        <div class="account-header">
+            <h1>Hesabım</h1>
+            <p>Hesap bilgileriniz ve lisans detaylarınız</p>
+        </div>
+
+        <div class="account-info">
+            <div class="info-card">
+                <h3>Discord Bilgileri</h3>
+                <div class="info-item">
+                    <span class="info-label">Discord Adı:</span>
+                    <span class="info-value">{{ discord_name }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Discord ID:</span>
+                    <span class="info-value">{{ discord_id }}</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Lisans Bilgileri</h3>
+                <div class="info-item">
+                    <span class="info-label">Son Geçerlilik Tarihi:</span>
+                    <span class="info-value {{ 'status-expired' if expiry == 'Unknown' else 'status-active' }}">{{ expiry }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Durum:</span>
+                    <span class="info-value status-active">Aktif</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Sistem Bilgileri</h3>
+                <div class="info-item">
+                    <span class="info-label">Uygulama Sürümü:</span>
+                    <span class="info-value">1.0.0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Platform:</span>
+                    <span class="info-value">FiveM Lua AI Chat</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Son Güncelleme:</span>
+                    <span class="info-value">2024-01-01</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Favori Konular</h3>
+                <div id="favorites-list"></div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/" class="back-button">Ana Sayfaya Dön</a>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FiveM Lua AI Chat</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <!-- Status Indicators -->
+    <div id="status-indicators" class="status-indicators">
+      <div id="connection-status" class="status-indicator" title="Bağlantı Durumu">
+        <span class="status-dot connected"></span>
+        <span class="status-text">Çevrimiçi</span>
+      </div>
+      <div id="api-status" class="status-indicator" title="API Durumu">
+        <span class="status-dot available"></span>
+        <span class="status-text">API Hazır</span>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification-container" class="notification-container" aria-live="polite"></div>
+
+    <!-- Maintenance Warning -->
+    <div id="maintenance-warning" class="maintenance-warning" style="display: none;" role="alert">
+      <div>
+        🚧 Sistem Bakımda 🚧<br>
+        Şu anda bakım çalışmaları yapıyoruz. Kısa süre sonra hizmete döneceğiz.
+      </div>
+    </div>
+
+    <header>
+      <h1>FiveM Lua AI Chat</h1>
+      <div class="header-buttons light-theme">
+        <button id="new-chat-btn" title="Yeni Sohbet" aria-label="Yeni sohbet başlat">+ Yeni Sohbet</button>
+        <button id="clear-chat-btn" title="Mevcut Sohbeti Temizle" aria-label="Mevcut sohbeti temizle">Sohbeti Temizle</button>
+        <button id="download-all-btn" title="Tüm Kodu ZIP olarak İndir" aria-label="Tüm kodu indir">Tüm Kodu İndir</button>
+        <select id="export-format" class="light-select" aria-label="Dışa aktarma formatı">
+          <option value="zip">ZIP</option>
+          <option value="json">JSON</option>
+          <option value="xml">XML</option>
+          <option value="md">Markdown</option>
+        </select>
+        <button id="theme-selector-btn" title="Tema Seç" aria-label="Tema seçici">🎨 Tema</button>
+        <button id="search-btn" title="Gelişmiş Arama" aria-label="Gelişmiş arama">🔍 Ara</button>
+      </div>
+      <div class="auth-buttons light-theme">
+        <button id="logout-btn" class="light-btn" style="display:none;" aria-label="Çıkış yap">Çıkış</button>
+        <button id="coding-btn" class="light-btn" aria-label="Kodlama sayfası">Kodlama</button>
+        <button id="image-gen-btn" class="light-btn" aria-label="Whisper sayfası">Whisper</button>
+        <button onclick="window.location.href='/hesabim'" class="light-btn" style="margin-left: 10px;" aria-label="Hesabım sayfası">Hesabım</button>
+        <button onclick="window.location.href='/custom_instructions'" aria-label="Özel talimatlar">Özel Talimatlar</button>
+        <button onclick="window.location.href='/image_analysis'" aria-label="Görüntü analizi">Görüntü Analizi</button>
+        <button onclick="window.location.href='/sample_projects'" aria-label="Örnek projeler">Örnek Projeler</button>
+        <button onclick="window.location.href='/education'" aria-label="Eğitim sayfası">Eğitim</button>
+      </div>
+      </nav>
+      <nav class="light-theme">
+    </header>
+
+
+    <aside id="chat-list" class="chat-list">
+      <!-- Chat sessions will be listed here -->
+    </aside>
+    <main>
+      <div id="chat-window" class="chat-window">
+        <div id="chat-messages" class="chat-messages">
+          <!-- Messages will appear here -->
+        </div>
+        <div id="typing-indicator" class="typing-indicator" style="display: none;">
+          <span>Yazıyor...</span>
+        </div>
+      </div>
+      <form id="chat-form" class="chat-form" role="form" aria-label="Sohbet formu">
+        <div class="input-container">
+          <textarea id="chat-input" placeholder="Mesajınızı yazın..." rows="2" aria-label="Sohbet mesajı" maxlength="2000"></textarea>
+          <button type="button" id="emoji-btn" class="emoji-btn" title="Emoji Ekle" aria-label="Emoji seçici">😊</button>
+        </div>
+        <button type="submit" aria-label="Mesajı gönder">Gönder</button>
+        <div class="chat-controls">
+          <!-- Yeni stil ile checkboxlar -->
+          <link rel="stylesheet" href="/static/custom-checkbox.css" />
+          <label class="custom-checkbox" for="custom-web-search-toggle" title="Web Arama Modu" aria-label="Web arama">
+            <input type="checkbox" id="custom-web-search-toggle">
+            <span class="checkmark"></span>
+            Web Ara
+          </label>
+          <label class="custom-checkbox" for="custom-longer-thinking-toggle" title="Derin Düşünme Modu" aria-label="Derin düşünme">
+            <input type="checkbox" id="custom-longer-thinking-toggle">
+            <span class="checkmark"></span>
+            Derin Düşünme
+          </label>
+          <div class="media-upload-controls">
+            <label for="photo-upload" title="Resim Yükle" aria-label="Resim yükle">
+              <input type="file" id="photo-upload" accept="image/*" multiple>
+              📷 Resim
+            </label>
+            <label for="file-upload" title="Dosya Yükle" aria-label="Dosya yükle">
+              <input type="file" id="file-upload" accept=".lua,.txt,.json,.xml,.md">
+              📎 Dosya
+            </label>
+          </div>
+        </div>
+        <div id="file-preview" class="file-preview" style="display: none;"></div>
+      </form>
+        <h2></h2>
+        <form id="image-gen-form">
+        </form>
+        <div id="image-result" class="image-result"></div>
+      </section>
+    </main>
+
+    <!-- Key Entry Modal -->
+    <div id="key-modal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Site Access Key</h2>
+        <input type="password" id="site-key-input" placeholder="Enter your access key" />
+        <button id="submit-key-btn">Submit</button>
+        <p id="key-error-msg" class="error-message" style="display:none;">Lütfen geçerli bir anahtar girin veya satın alın.</p>
+      </div>
+    </div>
+
+    <!-- Theme Selector Modal -->
+    <div id="theme-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content theme-modal-content">
+        <button class="close-modal-btn" id="close-theme-modal" aria-label="Kapat">&times;</button>
+        <h2>Tema Seçici</h2>
+        <div class="theme-grid">
+          <div class="theme-option" data-theme="dark">
+            <div class="theme-preview dark-preview"></div>
+            <span>Koyu Tema</span>
+          </div>
+          <div class="theme-option" data-theme="light">
+            <div class="theme-preview light-preview"></div>
+            <span>Açık Tema</span>
+          </div>
+          <div class="theme-option" data-theme="blue">
+            <div class="theme-preview blue-preview"></div>
+            <span>Mavi Tema</span>
+          </div>
+          <div class="theme-option" data-theme="green">
+            <div class="theme-preview green-preview"></div>
+            <span>Yeşil Tema</span>
+          </div>
+          <div class="theme-option" data-theme="purple">
+            <div class="theme-preview purple-preview"></div>
+            <span>Mor Tema</span>
+          </div>
+          <div class="theme-option" data-theme="custom">
+            <div class="theme-preview custom-preview"></div>
+            <span>Özel Tema</span>
+          </div>
+        </div>
+        <div class="custom-theme-controls" id="custom-theme-controls" style="display: none;">
+          <h3>Özel Tema Ayarları</h3>
+          <div class="color-picker">
+            <label for="primary-color">Ana Renk:</label>
+            <input type="color" id="primary-color" value="#00d4ff">
+          </div>
+          <div class="color-picker">
+            <label for="secondary-color">İkincil Renk:</label>
+            <input type="color" id="secondary-color" value="#333">
+          </div>
+          <div class="color-picker">
+            <label for="background-color">Arka Plan:</label>
+            <input type="color" id="background-color" value="#121212">
+          </div>
+          <button id="save-custom-theme">Özel Temayı Kaydet</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emoji Picker Modal -->
+    <div id="emoji-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content emoji-modal-content">
+        <button class="close-modal-btn" id="close-emoji-modal" aria-label="Kapat">&times;</button>
+        <h2>Emoji Seçici</h2>
+        <div class="emoji-categories">
+          <button class="emoji-category-btn active" data-category="recent">Son Kullanılan</button>
+          <button class="emoji-category-btn" data-category="smileys">Yüz İfadeleri</button>
+          <button class="emoji-category-btn" data-category="animals">Hayvanlar</button>
+          <button class="emoji-category-btn" data-category="food">Yiyecek</button>
+          <button class="emoji-category-btn" data-category="activities">Aktiviteler</button>
+          <button class="emoji-category-btn" data-category="travel">Seyahat</button>
+          <button class="emoji-category-btn" data-category="objects">Nesneler</button>
+          <button class="emoji-category-btn" data-category="symbols">Semboller</button>
+        </div>
+        <div class="emoji-grid" id="emoji-grid">
+          <!-- Emojis will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced Search Modal -->
+    <div id="enhanced-search-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content search-modal-content">
+        <button class="close-modal-btn" id="close-search-modal" aria-label="Kapat">&times;</button>
+        <h2>Gelişmiş Arama</h2>
+        <div class="search-filters">
+          <input type="text" id="enhanced-search-input" placeholder="Arama terimi..." aria-label="Arama terimi">
+          <select id="search-scope" aria-label="Arama kapsamı">
+            <option value="all">Tüm Sohbetler</option>
+            <option value="current">Mevcut Sohbet</option>
+          </select>
+          <select id="search-type" aria-label="İçerik türü">
+            <option value="all">Tümü</option>
+            <option value="messages">Mesajlar</option>
+            <option value="code">Kod</option>
+            <option value="names">Snippet İsimleri</option>
+          </select>
+          <input type="date" id="search-date-from" aria-label="Başlangıç tarihi">
+          <input type="date" id="search-date-to" aria-label="Bitiş tarihi">
+          <button id="perform-enhanced-search">Ara</button>
+        </div>
+        <div class="search-results" id="enhanced-search-results">
+          <!-- Search results will be populated here -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Login/Register Modal -->
+
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-lua.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://unpkg.com/fengari-web@0.1.4/dist/fengari-web.js"></script>
+  <script src="/static/darkmode-toggle.js"></script>
+  <script src="/static/accounts.js"></script>
+  <script src="/static/forum.js"></script>
+  <script src="/static/education.js"></script>
+  <script src="/static/language.js"></script>
+  <script src="/static/metrics.js"></script>
+  <script src="/static/simulation.js"></script>
+  <script src="/static/collaboration.js"></script>
+  <script src="/static/github-integration.js"></script>
+  <script src="/static/server-integration.js"></script>
+  <script src="/static/advanced-ai.js"></script>
+  <script src="/static/themes.js"></script>
+  <script src="/static/emoji-data.js"></script>
+  <script src="/static/notifications.js"></script>
+  <script src="/static/script.js"></script>
+</body>
+</html>

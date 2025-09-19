@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Görsel Oluşturma - FiveM Lua AI Chat</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.css" rel="stylesheet" />
+  <style>
+    .image-gen-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .image-gen-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .image-gen-header h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .image-gen-header p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .image-gen-form {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .form-group select,
+    .form-group input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .form-group select:focus,
+    .form-group input[type="number"]:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .generate-btn {
+      background: #007bff;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+
+    .generate-btn:hover {
+      background: #0056b3;
+    }
+
+    .generate-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .image-result {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-result img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .loading {
+      color: #666;
+      font-size: 18px;
+    }
+
+    .error {
+      color: #dc3545;
+      font-size: 18px;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #6c757d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 1000;
+    }
+
+    .back-btn:hover {
+      background: #5a6268;
+    }
+
+    .examples {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .examples h3 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .example-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .example-tag {
+      background: #007bff;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .example-tag:hover {
+      background: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .image-gen-container {
+        padding: 10px;
+      }
+
+      .image-gen-form {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="back-btn">← Ana Sayfa</a>
+
+  <div class="image-gen-container">
+    <div class="image-gen-header">
+      <h1>🎨 Görsel Oluşturma</h1>
+      <p>Yapay zeka ile hayal gücünüzü gerçeğe dönüştürün</p>
+    </div>
+
+    <form id="image-gen-form" class="image-gen-form">
+      <div class="form-group">
+        <label for="image-prompt">Görsel Açıklaması:</label>
+        <textarea
+          id="image-prompt"
+          placeholder="Örneğin: Güneş batımında bir dağ manzarası, yağlı boya tekniği, yüksek çözünürlük..."
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="image-style">Stil:</label>
+          <select id="image-style">
+            <option value="">Seçiniz</option>
+            <option value="realistic">Gerçekçi</option>
+            <option value="artistic">Sanatsal</option>
+            <option value="cartoon">Çizgi Film</option>
+            <option value="abstract">Soyut</option>
+            <option value="photography">Fotoğraf</option>
+            <option value="digital art">Dijital Sanat</option>
+            <option value="oil painting">Yağlı Boya</option>
+            <option value="watercolor">Suluboya</option>
+            <option value="sketch">Kroki</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="image-size">Boyut:</label>
+          <select id="image-size">
+          <option value="256x256">256x256 (Kare)</option>
+          <option value="512x512">512x512 (Kare)</option>
+          <option value="1024x1024">1024x1024 (Kare)</option>
+        </select>
+        </div>
+      </div>
+
+      <button type="submit" class="generate-btn" id="generate-btn">
+        🎨 Görsel Oluştur
+      </button>
+    </form>
+
+    <div id="image-result" class="image-result">
+      <p>Görseliniz burada görünecek</p>
+    </div>
+
+    <div class="examples">
+      <h3>💡 İlham Alın:</h3>
+      <div class="example-tags">
+        <span class="example-tag" onclick="setPrompt('Uzayda yüzen kristal şehir')">Uzayda yüzen kristal şehir</span>
+        <span class="example-tag" onclick="setPrompt('Cyberpunk tarzında neon ışıklı Tokyo gecesi')">Cyberpunk Tokyo</span>
+        <span class="example-tag" onclick="setPrompt('Fantastik ormanda yaşayan ejderha')">Fantastik ejderha</span>
+        <span class="example-tag" onclick="setPrompt('Van Gogh tarzında yıldızlı gece')">Van Gogh yıldızlı gece</span>
+        <span class="example-tag" onclick="setPrompt('Geleceğin arabaları yarışıyor')">Geleceğin yarış arabaları</span>
+        <span class="example-tag" onclick="setPrompt('Deniz altında yaşayan şehir')">Deniz altı şehri</span>
+        <span class="example-tag" onclick="setPrompt('Steampunk tarzında uçan gemi')">Steampunk uçan gemi</span>
+        <span class="example-tag" onclick="setPrompt('Rüya gibi pembe bulutlar')">Rüya gibi bulutlar</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setPrompt(prompt) {
+      document.getElementById('image-prompt').value = prompt;
+    }
+
+    document.getElementById('image-gen-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const prompt = document.getElementById('image-prompt').value.trim();
+      const style = document.getElementById('image-style').value;
+      const size = document.getElementById('image-size').value;
+
+      if (!prompt) {
+        alert('Lütfen bir görsel açıklaması girin!');
+        return;
+      }
+
+      const generateBtn = document.getElementById('generate-btn');
+      const resultDiv = document.getElementById('image-result');
+
+      // Build enhanced prompt
+      let enhancedPrompt = prompt;
+      if (style) {
+        enhancedPrompt += `, ${style} tarzında`;
+      }
+      enhancedPrompt += `, yüksek kaliteli, detaylı`;
+
+      generateBtn.disabled = true;
+      generateBtn.textContent = '⏳ Oluşturuluyor...';
+
+      resultDiv.innerHTML = '<div class="loading">🎨 Görseliniz oluşturuluyor, lütfen bekleyin...</div>';
+
+      try {
+        const response = await fetch('/generate_image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: enhancedPrompt,
+            size: size || '1024x1024'
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.image_url) {
+          resultDiv.innerHTML = `
+            <div>
+              <img src="${data.image_url}" alt="Oluşturulan Görsel" />
+              <br><br>
+              <button onclick="downloadImage('${data.image_url}')" style="margin-top: 10px; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                📥 Görseli İndir
+              </button>
+            </div>
+          `;
+        } else {
+          resultDiv.innerHTML = '<div class="error">❌ Görsel oluşturma başarısız oldu. Lütfen tekrar deneyin.</div>';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        resultDiv.innerHTML = '<div class="error">❌ Bir hata oluştu. Lütfen tekrar deneyin.</div>';
+      } finally {
+        generateBtn.disabled = false;
+        generateBtn.textContent = '🎨 Görsel Oluştur';
+      }
+    };
+
+    function downloadImage(imageUrl) {
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = 'olusuturulan-gorsel-' + Date.now() + '.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #fff;
+    }
+    .section {
+      background-color: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .section h2 {
+      color: #fff;
+      margin-top: 0;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #ccc;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #555;
+      border-radius: 4px;
+      background-color: #222;
+      color: #fff;
+    }
+    button {
+      background-color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #555;
+    }
+    .key-list {
+      list-style: none;
+      padding: 0;
+    }
+    .key-item {
+      background-color: #222;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .key-info {
+      flex-grow: 1;
+    }
+    .key-actions button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+    .log-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .log-item {
+      background-color: #222;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .error {
+      color: #ff6b6b;
+    }
+    .success {
+      color: #51cf66;
+    }
+    /* Admin Key Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background-color: #111;
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    .modal-content h2 {
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #555;
+      border-radius: 4px;
+      background-color: #222;
+      color: #fff;
+    }
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .modal-content button:hover {
+      background-color: #555;
+    }
+    .error-message {
+      color: #ff6b6b;
+      margin-top: 10px;
+    }
+    .shake {
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Admin Key Modal -->
+  <div id="admin-key-modal" class="modal-overlay" style="display: flex;">
+    <div class="modal-content">
+      <h2>Admin Panel Erişimi</h2>
+      <input type="password" id="admin-key-input" placeholder="Admin anahtarını girin" />
+      <button id="submit-admin-key-btn">Giriş</button>
+      <p id="admin-key-error-msg" class="error-message" style="display:none;">Yanlış anahtar! Lütfen tekrar deneyin.</p>
+    </div>
+  </div>
+
+  <div id="admin-content" style="display: none;">
+    <div class="container">
+    <h1>Admin Panel</h1>
+
+    <div class="section">
+      <h2>Yeni Anahtar Oluştur</h2>
+      <form id="create-key-form">
+        <div class="form-group">
+          <label for="discord-name">Discord Adı:</label>
+          <input type="text" id="discord-name" required>
+        </div>
+        <div class="form-group">
+          <label for="discord-id">Discord ID:</label>
+          <input type="text" id="discord-id" required>
+        </div>
+        <div class="form-group">
+          <label for="expiry-days">Son Kullanım Tarihi (Gün):</label>
+          <input type="number" id="expiry-days" min="1" max="365" value="30" required>
+        </div>
+        <button type="submit">Anahtar Oluştur</button>
+      </form>
+      <p id="create-key-result"></p>
+    </div>
+
+    <div class="section">
+      <h2>Anahtarlar</h2>
+      <ul id="key-list" class="key-list">
+        <!-- Keys will be loaded here -->
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Erişim Logları</h2>
+      <div id="access-logs" class="log-list">
+        <!-- Logs will be loaded here -->
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Bakım Modu</h2>
+      <p id="maintenance-status">Durum yükleniyor...</p>
+      <button id="toggle-maintenance-btn">Bakım Modunu Aç/Kapat</button>
+      <p id="maintenance-result"></p>
+    </div>
+  </div>
+
+  <script>
+    // Load keys
+    function loadKeys() {
+      fetch('/admin/get_keys')
+        .then(response => response.json())
+        .then(keys => {
+          const keyList = document.getElementById('key-list');
+          keyList.innerHTML = '';
+          keys.forEach(key => {
+            const li = document.createElement('li');
+            li.className = 'key-item';
+            li.innerHTML = `
+              <div class="key-info">
+                <strong>${key.key}</strong><br>
+                Discord Adı: ${key.discord_name || 'N/A'}<br>
+                Discord ID: ${key.discord_id || 'N/A'}<br>
+                Oluşturulma: ${new Date(key.created_at).toLocaleString()}<br>
+                Son Kullanım: <span id="expiry-${key.id}">${new Date(key.expiry).toLocaleString()}</span><br>
+                Aktif: ${key.active ? 'Evet' : 'Hayır'}<br>
+                Rol: <span id="role-${key.id}">${key.role || 'user'}</span>
+              </div>
+              <div class="key-actions">
+                <div style="margin-bottom: 10px;">
+                  <input type="number" id="days-${key.id}" placeholder="Gün sayısı" min="-365" max="365" style="width: 80px; margin-right: 5px;">
+                  <button onclick="updateExpiry(${key.id})" style="padding: 2px 8px; font-size: 12px;">Süre Güncelle</button>
+                </div>
+                <div style="margin-bottom: 10px;">
+                  <select id="role-select-${key.id}" style="width: 100px; margin-right: 5px;">
+                    <option value="user" ${key.role === 'user' ? 'selected' : ''}>User</option>
+                    <option value="moderator" ${key.role === 'moderator' ? 'selected' : ''}>Moderator</option>
+                    <option value="admin" ${key.role === 'admin' ? 'selected' : ''}>Admin</option>
+                  </select>
+                  <button onclick="updateRole(${key.id})" style="padding: 2px 8px; font-size: 12px;">Rol Güncelle</button>
+                </div>
+                <button onclick="toggleKey(${key.id}, ${key.active})">${key.active ? 'Deaktif Et' : 'Aktif Et'}</button>
+                <button onclick="deleteKey(${key.id})">Sil</button>
+              </div>
+            `;
+            keyList.appendChild(li);
+          });
+        })
+        .catch(error => console.error('Error loading keys:', error));
+    }
+
+    // Load access logs
+    function loadAccessLogs() {
+      fetch('/admin/get_access_logs')
+        .then(response => response.json())
+        .then(logs => {
+          const logContainer = document.getElementById('access-logs');
+          logContainer.innerHTML = '';
+          logs.forEach(log => {
+            const div = document.createElement('div');
+            div.className = 'log-item';
+            div.innerHTML = `
+              <strong>${log.key}</strong> - ${log.ip} - ${new Date(log.accessed_at).toLocaleString()}
+            `;
+            logContainer.appendChild(div);
+          });
+        })
+        .catch(error => console.error('Error loading logs:', error));
+    }
+
+    // Create key
+    document.getElementById('create-key-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const discordName = document.getElementById('discord-name').value;
+      const discordId = document.getElementById('discord-id').value;
+      const expiryDays = document.getElementById('expiry-days').value;
+      fetch('/admin/create_key', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ discord_name: discordName, discord_id: discordId, expiry_days: parseInt(expiryDays) }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.key) {
+          document.getElementById('create-key-result').innerHTML = `<span class="success">Anahtar oluşturuldu: ${data.key}</span>`;
+          loadKeys();
+        } else {
+          document.getElementById('create-key-result').innerHTML = `<span class="error">${data.error}</span>`;
+        }
+      })
+      .catch(error => {
+        document.getElementById('create-key-result').innerHTML = `<span class="error">Hata: ${error.message}</span>`;
+      });
+    });
+
+    // Toggle key active status
+    function toggleKey(keyId) {
+      fetch('/admin/toggle_key', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ key_id: keyId }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          loadKeys();
+        } else {
+          alert('Hata: ' + data.error);
+        }
+      })
+      .catch(error => alert('Hata: ' + error.message));
+    }
+
+    // Delete key
+    function deleteKey(keyId) {
+      if (confirm('Bu anahtarı silmek istediğinizden emin misiniz?')) {
+        fetch('/admin/delete_key', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ key_id: keyId }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            loadKeys();
+          } else {
+            alert('Hata: ' + data.error);
+          }
+        })
+        .catch(error => alert('Hata: ' + error.message));
+      }
+    }
+
+    // Update key expiry
+    function updateExpiry(keyId) {
+      const daysInput = document.getElementById(`days-${keyId}`);
+      const days = parseInt(daysInput.value);
+      if (isNaN(days) || days === 0) {
+        alert('Lütfen geçerli bir gün sayısı girin (pozitif: uzat, negatif: kısalt)');
+        return;
+      }
+      if (confirm(`${days > 0 ? 'Uzatmak' : 'Kısaltmak'} istediğinizden emin misiniz? (${Math.abs(days)} gün)`)) {
+        fetch('/admin/update_key_expiry', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ key_id: keyId, days: days }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Update the expiry display
+            const expiryElement = document.getElementById(`expiry-${keyId}`);
+            expiryElement.textContent = new Date(data.new_expiry).toLocaleString();
+            daysInput.value = ''; // Clear the input
+            alert('Anahtar süresi başarıyla güncellendi!');
+          } else {
+            alert('Hata: ' + data.error);
+          }
+        })
+        .catch(error => alert('Hata: ' + error.message));
+      }
+    }
+
+    // Update user role
+    function updateRole(keyId) {
+      const roleSelect = document.getElementById(`role-select-${keyId}`);
+      const newRole = roleSelect.value;
+      if (confirm(`Bu kullanıcının rolünü '${newRole}' olarak güncellemek istediğinizden emin misiniz?`)) {
+        fetch('/admin/update_user_role', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ key_id: keyId, role: newRole }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Update the role display
+            const roleElement = document.getElementById(`role-${keyId}`);
+            roleElement.textContent = newRole;
+            alert('Kullanıcı rolü başarıyla güncellendi!');
+          } else {
+            alert('Hata: ' + data.error);
+          }
+        })
+        .catch(error => alert('Hata: ' + error.message));
+      }
+    }
+
+    // Load maintenance status
+    function loadMaintenanceStatus() {
+      fetch('/get_maintenance_status')
+        .then(response => response.json())
+        .then(data => {
+          const statusElement = document.getElementById('maintenance-status');
+          const toggleBtn = document.getElementById('toggle-maintenance-btn');
+          if (data.maintenance) {
+            statusElement.textContent = 'Bakım Modu: AÇIK';
+            statusElement.style.color = '#ff6b6b';
+            toggleBtn.textContent = 'Bakım Modunu Kapat';
+          } else {
+            statusElement.textContent = 'Bakım Modu: KAPALI';
+            statusElement.style.color = '#51cf66';
+            toggleBtn.textContent = 'Bakım Modunu Aç';
+          }
+        })
+        .catch(error => console.error('Error loading maintenance status:', error));
+    }
+
+    // Toggle maintenance mode
+    document.getElementById('toggle-maintenance-btn').addEventListener('click', function() {
+      fetch('/admin/toggle_maintenance', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('maintenance-result').innerHTML = `<span class="success">Bakım modu ${data.maintenance ? 'açıldı' : 'kapatıldı'}.</span>`;
+          loadMaintenanceStatus();
+        } else {
+          document.getElementById('maintenance-result').innerHTML = `<span class="error">Hata: ${data.error}</span>`;
+        }
+      })
+      .catch(error => {
+        document.getElementById('maintenance-result').innerHTML = `<span class="error">Hata: ${error.message}</span>`;
+      });
+    });
+
+    // Load data on page load
+    loadKeys();
+    loadAccessLogs();
+    loadMaintenanceStatus();
+  </script>
+  <script src="/static/script.js"></script>
+</body>
+</html>

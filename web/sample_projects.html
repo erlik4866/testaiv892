@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Örnek Projeler - FiveM Lua Dev</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Örnek Projeler</h1>
+        <nav>
+            <a href="/">Ana Sayfa</a>
+            <a href="/coding">Kodlama</a>
+            <a href="/education">Eğitim</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="projects-container">
+            <h2>Hazır FiveM Script Şablonları</h2>
+            <div id="projects" class="projects-grid"></div>
+        </div>
+    </main>
+
+    <script>
+        const projectsDiv = document.getElementById('projects');
+
+        fetch('/sample_projects')
+            .then(response => response.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    data.forEach(project => {
+                        const projectElement = document.createElement('div');
+                        projectElement.classList.add('project-card');
+                        projectElement.innerHTML = `
+                            <h3>${project.name || 'Örnek Proje'}</h3>
+                            <p>${project.description || 'Açıklama yok'}</p>
+                            <button onclick="loadProject('${project.code || ''}')">Yükle</button>
+                        `;
+                        projectsDiv.appendChild(projectElement);
+                    });
+                } else {
+                    projectsDiv.innerHTML = '<p>Şablonlar yüklenemedi.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading projects:', error);
+                projectsDiv.innerHTML = '<p>Hata oluştu.</p>';
+            });
+
+        function loadProject(code) {
+            if (code) {
+                // Kodlama sayfasına yönlendir ve kodu yükle
+                window.location.href = `/coding?code=${encodeURIComponent(code)}`;
+            } else {
+                alert('Kod bulunamadı.');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FiveM AI Coding</title>
+  <link rel="stylesheet" href="/static/coding.css" />
+</head>
+<body>
+  <header>
+    <h1>FiveM AI Coding</h1>
+    <nav>
+      <a href="http://127.0.0.1:5000/ " class="back-btn">← Ana Sayfa</a>
+      <!-- Theme selector -->
+      <select id="theme-select" title="Tema Seçimi">
+        <option value="light" selected>Açık</option>
+        <option value="dark">Koyu</option>
+        <option value="blue">Mavi</option>
+        <option value="green">Yeşil</option>
+      </select>
+      <!-- Language selector -->
+      <select id="language-select" title="Dil Seçimi">
+        <option value="lua" selected>Lua</option>
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+      </select>
+      <!-- Settings button -->
+      <button id="settings-btn" title="Ayarlar">⚙️</button>
+      <!-- File save/load buttons -->
+      <button id="save-file-btn" title="Dosyayı Kaydet">Kaydet</button>
+      <input type="file" id="load-file-input" style="display:none" />
+      <button id="load-file-btn" title="Dosya Yükle">Yükle</button>
+      <!-- Run code button -->
+      <button id="run-code-btn" title="Kodu Çalıştır">Çalıştır</button>
+    </nav>
+  </header>
+  <main>
+    <aside class="sidebar">
+      <h3>Kod Şablonları</h3>
+      <button class="template-btn" onclick="loadTemplate('client')">Client Script</button>
+      <button class="template-btn" onclick="loadTemplate('server')">Server Script</button>
+      <button class="template-btn" onclick="loadTemplate('shared')">Shared Script</button>
+      <button class="template-btn" onclick="loadTemplate('command')">Komut Örneği</button>
+      <button class="template-btn" onclick="loadTemplate('event')">Event Örneği</button>
+      <button class="template-btn" onclick="loadTemplate('mysql')">MySQL Bağlantısı</button>
+
+      <h3>Fikir Önerileri</h3>
+      <button class="template-btn" onclick="loadIdea('vehicle')">Araç Sistemi</button>
+      <button class="template-btn" onclick="loadIdea('inventory')">Envanter Sistemi</button>
+      <button class="template-btn" onclick="loadIdea('housing')">Ev Sistemi</button>
+      <button class="template-btn" onclick="loadIdea('job')">Meslek Sistemi</button>
+      <button class="template-btn" onclick="loadIdea('gang')">Çete Sistemi</button>
+      <button class="template-btn" onclick="loadIdea('shop')">Mağaza Sistemi</button>
+    </aside>
+
+    <section class="editor-section">
+      <h2>Kod Editörü</h2>
+      <div class="editor-tabs">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="main.lua">main.lua</button>
+          <button class="add-tab-btn" title="Yeni Sekme Ekle">+</button>
+        </div>
+        <div class="code-stats">
+          <span id="line-count">Satır: 0</span> | <span id="function-count">Fonksiyon: 0</span> | <span id="char-count">Karakter: 0</span>
+        </div>
+      </div>
+      <div id="code-editor" style="width:100%; height:600px; border:1px solid #444;"></div>
+      <div id="code-history-timeline" title="Kod Geçmişi Zaman Çizelgesi" style="margin-top:10px; height: 50px; overflow-x: auto; white-space: nowrap; border: 1px solid #666; background: #222; color: #eee; padding: 5px;"></div>
+    </section>
+  </main>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Özelleştirme Ayarları</h2>
+      <label for="font-size-select">Yazı Boyutu:</label>
+      <select id="font-size-select">
+        <option value="12">12px</option>
+        <option value="14">14px</option>
+        <option value="16" selected>16px</option>
+        <option value="18">18px</option>
+        <option value="20">20px</option>
+      </select>
+      <br><br>
+      <label for="tab-size-select">Sekme Boyutu:</label>
+      <select id="tab-size-select">
+        <option value="2" selected>2</option>
+        <option value="4">4</option>
+      </select>
+      <br><br>
+      <label for="word-wrap-toggle">Kelime Kaydırma:</label>
+      <input type="checkbox" id="word-wrap-toggle" checked />
+      <br><br>
+      <button id="save-settings-btn">Kaydet</button>
+    </div>
+  </div>
+
+  <script src="/static/fengari-web.js"></script>
+  <script src="/static/coding.js"></script>
+</body>
+</html>

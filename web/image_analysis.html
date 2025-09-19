@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Görüntü Analizi - FiveM Lua Dev</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Görüntü Analizi</h1>
+        <nav>
+            <a href="/">Ana Sayfa</a>
+            <a href="/coding">Kodlama</a>
+            <a href="/education">Eğitim</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="analysis-container">
+            <h2>Görüntü Yükleyin ve Analiz Edin</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="fileInput" accept="image/*" required>
+                <button type="submit">Analiz Et</button>
+            </form>
+            <div id="result">
+                <img id="originalImage" style="display: none;">
+                <img id="edgesImage" style="display: none;">
+            </div>
+            <div id="message"></div>
+        </div>
+    </main>
+
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const resultDiv = document.getElementById('result');
+        const messageDiv = document.getElementById('message');
+        const originalImage = document.getElementById('originalImage');
+        const edgesImage = document.getElementById('edgesImage');
+
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const file = fileInput.files[0];
+            if (!file) {
+                messageDiv.textContent = 'Lütfen bir görüntü dosyası seçin.';
+                messageDiv.style.color = 'red';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/image_analysis', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.edges_image) {
+                    // Orijinal görüntüyü göster
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        originalImage.src = e.target.result;
+                        originalImage.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+
+                    // Kenar algılama sonucunu göster
+                    edgesImage.src = 'data:image/png;base64,' + data.edges_image;
+                    edgesImage.style.display = 'block';
+
+                    messageDiv.textContent = 'Analiz tamamlandı!';
+                    messageDiv.style.color = 'green';
+                } else {
+                    messageDiv.textContent = data.error || 'Analiz başarısız.';
+                    messageDiv.style.color = 'red';
+                }
+            })
+            .catch(error => {
+                console.error('Error analyzing image:', error);
+                messageDiv.textContent = 'Hata oluştu.';
+                messageDiv.style.color = 'red';
+            });
+        });
+    </script>
+</body>
+</html>

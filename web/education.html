@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>FiveM Lua Eğitim Modülü</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/education.js" defer></script>
+</head>
+<body class="education-page">
+    <header>
+        <h1>FiveM Lua Eğitim Modülü</h1>
+    </header>
+    <main class="education-main">
+        <section id="tutorials" class="tutorial-section">
+            <h2>Adım Adım Eğitimler</h2>
+            <div id="tutorial-list"></div>
+        </section>
+        <section id="quiz" class="quiz-section" style="display:none;">
+            <h2>Quiz</h2>
+            <div id="quiz-question"></div>
+            <div id="quiz-options"></div>
+            <button id="next-question">Sonraki Soru</button>
+        </section>
+        <section id="ai-qna" class="ai-qna-section">
+            <h2>AI Destekli Soru-Cevap</h2>
+            <textarea id="user-question" placeholder="Sorunuzu yazın..."></textarea>
+            <button id="ask-ai">Sor</button>
+            <div id="ai-answer"></div>
+        </section>
+    </main>
+</body>
+</html>

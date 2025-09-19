@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özel Talimatlar - FiveM Lua Dev</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Özel Talimatlar</h1>
+        <nav>
+            <a href="/">Ana Sayfa</a>
+            <a href="/coding">Kodlama</a>
+            <a href="/education">Eğitim</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="instructions-container">
+            <h2>AI Modeline Özel Talimatlarınızı Tanımlayın</h2>
+            <form id="instructionsForm">
+                <textarea id="instructions" placeholder="Özel talimatlarınızı buraya yazın..." rows="10"></textarea>
+                <button type="submit">Kaydet</button>
+            </form>
+            <div id="message"></div>
+        </div>
+    </main>
+
+    <script>
+        const instructionsTextarea = document.getElementById('instructions');
+        const instructionsForm = document.getElementById('instructionsForm');
+        const messageDiv = document.getElementById('message');
+
+        // Mevcut talimatları yükle
+        fetch('/custom_instructions')
+            .then(response => response.json())
+            .then(data => {
+                instructionsTextarea.value = data.instructions;
+            })
+            .catch(error => console.error('Error loading instructions:', error));
+
+        instructionsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const instructions = instructionsTextarea.value;
+
+            fetch('/custom_instructions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ instructions })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    messageDiv.textContent = 'Talimatlar başarıyla kaydedildi!';
+                    messageDiv.style.color = 'green';
+                } else {
+                    messageDiv.textContent = 'Hata oluştu.';
+                    messageDiv.style.color = 'red';
+                }
+            })
+            .catch(error => {
+                console.error('Error saving instructions:', error);
+                messageDiv.textContent = 'Hata oluştu.';
+                messageDiv.style.color = 'red';
+            });
+        });
+    </script>
+</body>
+</html>

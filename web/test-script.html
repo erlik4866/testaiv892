@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script.js Test Sayfası</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .test-button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .test-button:hover { background: #0056b3; }
+        .result { margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>Script.js Test Sayfası</h1>
+
+    <div class="test-section">
+        <h2>Event Listener Testleri</h2>
+        <button id="theme-selector-btn" class="test-button">🎨 Tema Seçici</button>
+        <button id="emoji-btn" class="test-button">😊 Emoji Seçici</button>
+        <button id="search-btn" class="test-button">🔍 Arama</button>
+        <div id="test-results" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Dosya Yükleme Testi</h2>
+        <label for="photo-upload" class="test-button">📷 Resim Yükle</label>
+        <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+        <label for="file-upload" class="test-button">📎 Dosya Yükle</label>
+        <input type="file" id="file-upload" accept=".lua,.txt,.json,.xml,.md" style="display: none;">
+        <div id="file-preview"></div>
+    </div>
+
+    <!-- Theme Modal -->
+    <div id="theme-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content theme-modal-content">
+            <button class="close-modal-btn" id="close-theme-modal" aria-label="Kapat">&times;</button>
+            <h2>Tema Seçici</h2>
+            <div class="theme-grid">
+                <div class="theme-option" data-theme="dark">
+                    <div class="theme-preview dark-preview"></div>
+                    <span>Koyu Tema</span>
+                </div>
+                <div class="theme-option" data-theme="light">
+                    <div class="theme-preview light-preview"></div>
+                    <span>Açık Tema</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emoji Modal -->
+    <div id="emoji-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content emoji-modal-content">
+            <button class="close-modal-btn" id="close-emoji-modal" aria-label="Kapat">&times;</button>
+            <h2>Emoji Seçici</h2>
+            <div class="emoji-grid" id="emoji-picker-content">
+                <!-- Emojis will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Search Modal -->
+    <div id="enhanced-search-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content search-modal-content">
+            <button class="close-modal-btn" id="close-search-modal" aria-label="Kapat">&times;</button>
+            <h2>Gelişmiş Arama</h2>
+            <div class="search-filters">
+                <input type="text" id="enhanced-search-input" placeholder="Arama terimi..." aria-label="Arama terimi">
+                <button id="perform-enhanced-search">Ara</button>
+            </div>
+            <div class="search-results" id="enhanced-search-results"></div>
+        </div>
+    </div>
+
+    <script src="/static/themes.js"></script>
+    <script src="/static/emoji-data.js"></script>
+    <script src="/static/notifications.js"></script>
+    <script src="/static/script.js"></script>
+
+    <script>
+        // Test script
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultsDiv = document.getElementById('test-results');
+
+            function logResult(message, success = true) {
+                const div = document.createElement('div');
+                div.className = success ? 'success' : 'error';
+                div.textContent = message;
+                resultsDiv.appendChild(div);
+            }
+
+            // Test theme button
+            document.getElementById('theme-selector-btn').addEventListener('click', function() {
+                logResult('Tema butonu tıklandı - Modal açılmalı');
+            });
+
+            // Test emoji button
+            document.getElementById('emoji-btn').addEventListener('click', function() {
+                logResult('Emoji butonu tıklandı - Modal açılmalı');
+            });
+
+            // Test search button
+            document.getElementById('search-btn').addEventListener('click', function() {
+                logResult('Arama butonu tıklandı - Modal açılmalı');
+            });
+
+            // Test file upload
+            document.getElementById('photo-upload').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    logResult(`Resim seçildi: ${e.target.files[0].name}`);
+                }
+            });
+
+            document.getElementById('file-upload').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    logResult(`Dosya seçildi: ${e.target.files[0].name}`);
+                }
+            });
+
+            logResult('Test sayfası yüklendi - Butonları tıklayarak test edin', true);
+        });
+    </script>
+</body>
+</html>

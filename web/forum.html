@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FiveM Lua Forum</title>
+    <style>
+      /* Inline forum specific styles */
+      .forum-category {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #2a2a2a;
+        border-radius: 8px;
+        border: 1px solid #333;
+      }
+
+      .forum-category h2 {
+        color: #00d4ff;
+        margin-bottom: 10px;
+      }
+
+      .forum-category p {
+        color: #ccc;
+        margin-bottom: 15px;
+      }
+
+      .forums-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .forum-item {
+        background-color: #333;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #444;
+      }
+
+      .forum-item h3 {
+        color: #00d4ff;
+        margin-bottom: 5px;
+      }
+
+      .forum-item p {
+        color: #ddd;
+        margin-bottom: 10px;
+      }
+
+      .topics-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .topic-item {
+        background-color: #1f1f1f;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #555;
+      }
+
+      .topic-item h4 {
+        color: #00d4ff;
+        margin-bottom: 5px;
+      }
+
+      .topic-item p {
+        color: #e0e0e0;
+        margin-bottom: 5px;
+      }
+
+      .topic-item small {
+        color: #aaa;
+        font-size: 0.9rem;
+      }
+
+      .replies {
+        margin-top: 10px;
+        padding-left: 10px;
+        border-left: 2px solid #00d4ff;
+      }
+
+      .reply {
+        margin-bottom: 8px;
+        padding: 5px;
+        background-color: #2a2a2a;
+        border-radius: 4px;
+      }
+
+      .reply p {
+        color: #ddd;
+        margin-bottom: 3px;
+      }
+
+      .reply small {
+        color: #bbb;
+        font-size: 0.8rem;
+      }
+
+      #new-topic-form {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #2a2a2a;
+        border-radius: 8px;
+        border: 1px solid #333;
+      }
+
+      #new-topic-form h2 {
+        color: #00d4ff;
+        margin-bottom: 10px;
+      }
+
+      #forum-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #forum-form input,
+      #forum-form textarea {
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        background-color: #333;
+        color: #e0e0e0;
+        font-size: 1rem;
+      }
+
+      #forum-form button {
+        background-color: #00d4ff;
+        border: none;
+        color: #121212;
+        padding: 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+
+      #forum-form button:hover {
+        background-color: #008bb3;
+      }
+
+      #user-info {
+        color: #00d4ff;
+        font-weight: 600;
+      }
+    </style>
+    <link rel="stylesheet" href="web/static/styles.css" />
+    <script defer src="web/static/forum.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>FiveM Lua Forum</h1>
+            <nav>
+                <button onclick="location.href='index.html'">Ana Sayfa</button>
+                <button onclick="location.href='forum.html'">Forum</button>
+                <button onclick="location.href='admin.html'">Admin</button>
+                <button onclick="location.href='hesabim.html'">Hesabım</button>
+            </nav>
+            <div class="header-buttons">
+                <button id="theme-toggle">Tema Değiştir</button>
+                <div id="user-info"></div>
+            </div>
+        </header>
+        <aside class="chat-list">
+            <h3>Forum Kategorileri</h3>
+            <div id="forum-sidebar">
+                <!-- Kategoriler buraya yüklenecek -->
+            </div>
+        </aside>
+        <main>
+            <section id="search-form">
+                <h2>Forum Arama</h2>
+                <form id="search-form">
+                    <input type="text" id="search-input" placeholder="Konu veya mesaj ara..." />
+                    <button type="submit">Ara</button>
+                </form>
+                <div id="search-results"></div>
+            </section>
+            <section id="new-topic-form">
+                <h2>Yeni Konu Oluştur</h2>
+                <form id="forum-form">
+                    <input type="text" id="forum-title" placeholder="Konu Başlığı" required />
+                    <input type="text" id="forum-tags" placeholder="Etiketler (virgülle ayır)" />
+                    <textarea id="forum-content" placeholder="Konu İçeriği" required></textarea>
+                    <button type="submit">Konu Oluştur</button>
+                </form>
+            </section>
+            <section id="forum-stats">
+                <h2>Forum İstatistikleri</h2>
+                <div id="stats-display"></div>
+            </section>
+            <section id="forum-categories">
+                <!-- Forum kategorileri ve içerikleri buraya yüklenecek -->
+            </section>
+        </main>
+        <footer>
+            <p>© 2024 FiveM Lua Forum | <a href="rss.xml">RSS Feed</a></p>
+        </footer>
+    </div>
+</body>
+</html>
